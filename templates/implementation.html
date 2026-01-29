@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Implementation Estimation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="section">
+
+<h3>Search Feature</h3>
+<form method="post">
+    <input name="Feature_ID" placeholder="Feature ID" required>
+    <button name="search">Search</button>
+</form>
+
+<hr>
+
+<h2>Implementation Effort Estimation</h2>
+
+<form method="post">
+
+    <!-- Feature ID -->
+    <div class="field">
+        <label>Feature_ID <span class="info">i</span>
+            <span class="tooltip">
+                Unique feature identifier used to track estimation and actual effort.
+            </span>
+        </label>
+        <input name="Feature_ID"
+               value="{{ data['Feature_ID'] if data else '' }}"
+               {% if data %}readonly{% endif %}>
+    </div>
+
+    <div class="field">
+        <label>No_of_UserStories <span class="info">i</span>
+            <span class="tooltip">
+                Numeric.<br>
+                Final count of user stories implemented.<br>
+                Used to allocate development and testing effort.
+            </span>
+        </label>
+        <input name="No_of_UserStories"
+               value="{{ data['No_of_UserStories'] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Story_Complexity <span class="info">i</span>
+            <span class="tooltip">
+                Scale 1–3 (1-low, 2-medium, 3-high).<br>
+                Implementation-time complexity observed per story.
+            </span>
+        </label>
+        <input name="Story_Complexity"
+               value="{{ data['Story_Complexity '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Design_Complexity <span class="info">i</span>
+            <span class="tooltip">
+                Scale 1–3.<br>
+                Actual design complexity encountered during implementation.
+            </span>
+        </label>
+        <input name="Design_Complexity"
+               value="{{ data['Design_Complexity '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Meta_Complexity <span class="info">i</span>
+            <span class="tooltip">
+                Scale 1–3.<br>
+                Real META/configuration complexity experienced.
+            </span>
+        </label>
+        <input name="Meta_Complexity"
+               value="{{ data['Meta_Complexity '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Features_Impacted <span class="info">i</span>
+            <span class="tooltip">
+                Numeric.<br>
+                Actual number of features/modules changed during coding.
+            </span>
+        </label>
+        <input name="Features_Impacted"
+               value="{{ data['Features_Impacted'] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Files_Impacted <span class="info">i</span>
+            <span class="tooltip">
+                Numeric.<br>
+                Number of source files modified/added/deleted.<br>
+                Proxy for code churn.
+            </span>
+        </label>
+        <input name="Files_Impacted"
+               value="{{ data['Files_Impacted '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Approx_LOC_Source <span class="info">i</span>
+            <span class="tooltip">
+                Numeric.<br>
+                Estimated source-code LOC added or modified.
+            </span>
+        </label>
+        <input name="Approx_LOC_Source"
+               value="{{ data['Approx_LOC_Source '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Approx_LOC_Test <span class="info">i</span>
+            <span class="tooltip">
+                Numeric.<br>
+                Estimated test-code LOC added or modified.
+            </span>
+        </label>
+        <input name="Approx_LOC_Test"
+               value="{{ data['Approx_LOC_Test '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Approx_Code_Complexity <span class="info">i</span>
+            <span class="tooltip">
+                Scale 1–3.<br>
+                Practical complexity of code written or refactored.
+            </span>
+        </label>
+        <input name="Approx_Code_Complexity"
+               value="{{ data['Approx_Code_Complexity '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>No_of_Interfaces_Impacted <span class="info">i</span>
+            <span class="tooltip">
+                Numeric.<br>
+                Final count of interfaces actually changed/added/removed.
+            </span>
+        </label>
+        <input name="No_of_Interfaces_Impacted"
+               value="{{ data['No_of_Interfaces_Impacted '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Interface_Complexity <span class="info">i</span>
+            <span class="tooltip">
+                Scale 1–3.<br>
+                Difficulty of implementing interface changes.
+            </span>
+        </label>
+        <input name="Interface_Complexity"
+               value="{{ data['Interface_Complexity '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Interfaces_Added <span class="info">i</span>
+            <span class="tooltip">
+                Numeric.<br>
+                Count of new interfaces implemented.
+            </span>
+        </label>
+        <input name="Interfaces_Added"
+               value="{{ data['Interfaces_Added '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Interfaces_Updated <span class="info">i</span>
+            <span class="tooltip">
+                Numeric.<br>
+                Count of existing interfaces updated.
+            </span>
+        </label>
+        <input name="Interfaces_Updated"
+               value="{{ data['Interfaces_Updated '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Interfaces_Deleted <span class="info">i</span>
+            <span class="tooltip">
+                Numeric.<br>
+                Count of interfaces removed during implementation.
+            </span>
+        </label>
+        <input name="Interfaces_Deleted"
+               value="{{ data['Interfaces_Deleted '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Integration_Complexity <span class="info">i</span>
+            <span class="tooltip">
+                Scale 1–3.<br>
+                Actual difficulty while integrating changes.
+            </span>
+        </label>
+        <input name="Integration_Complexity"
+               value="{{ data['Integration_Complexity '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>CrossComponent_Dependencies <span class="info">i</span>
+            <span class="tooltip">
+                Numeric.<br>
+                Actual cross-component dependency count.
+            </span>
+        </label>
+        <input name="CrossComponent_Dependencies"
+               value="{{ data['CrossComponent_Dependencies '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>OAM_Simulator_Change <span class="info">i</span>
+            <span class="tooltip">
+                Binary 0/1.<br>
+                Whether OAM/simulator changes were required.
+            </span>
+        </label>
+        <input name="OAM_Simulator_Change"
+               value="{{ data['OAM_Simulator_Change '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>UT_Count <span class="info">i</span>
+            <span class="tooltip">
+                Numeric.<br>
+                Number of unit tests added or updated.
+            </span>
+        </label>
+        <input name="UT_Count"
+               value="{{ data['UT_Count '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>PYSCT_Count <span class="info">i</span>
+            <span class="tooltip">
+                Numeric.<br>
+                Number of PYSCT/system tests added or updated.
+            </span>
+        </label>
+        <input name="PYSCT_Count"
+               value="{{ data['PYSCT_Count '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>New_Test_Cases <span class="info">i</span>
+            <span class="tooltip">
+                Numeric.<br>
+                Total new test cases created.
+            </span>
+        </label>
+        <input name="New_Test_Cases"
+               value="{{ data['New_Test_Cases '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Test_Case_Complexity <span class="info">i</span>
+            <span class="tooltip">
+                Scale 1–3.<br>
+                Complexity of implementing and validating test cases.
+            </span>
+        </label>
+        <input name="Test_Case_Complexity"
+               value="{{ data['Test_Case_Complexity '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Test_Coverage <span class="info">i</span>
+            <span class="tooltip">
+                Percentage.<br>
+                Coverage achieved related to feature scope.
+            </span>
+        </label>
+        <input name="Test_Coverage"
+               value="{{ data['Test_Coverage '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Review_Needed <span class="info">i</span>
+            <span class="tooltip">
+                Binary 0/1.<br>
+                Whether review cycles were required.
+            </span>
+        </label>
+        <input name="Review_Needed"
+               value="{{ data['Review_Needed '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Legacy_Test_Coverage (%) <span class="info">i</span>
+            <span class="tooltip">
+                Percentage.<br>
+                Existing legacy test coverage of impacted areas.
+            </span>
+        </label>
+        <input name="Legacy_Test_Coverage (%)"
+               value="{{ data['Legacy_Test_Coverage (%)     '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>ICFS_Design_Complexity <span class="info">i</span>
+            <span class="tooltip">
+                Scale 0–5.<br>
+                Actual ICFS design changes implemented.
+            </span>
+        </label>
+        <input name="ICFS_Design_Complexity"
+               value="{{ data['ICFS_Design_Complexity '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>PM_impact <span class="info">i</span>
+            <span class="tooltip">
+                Binary 0/1.<br>
+                Performance management changes required.
+            </span>
+        </label>
+        <input name="PM_impact"
+               value="{{ data['PM_impact '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>CM_impact <span class="info">i</span>
+            <span class="tooltip">
+                Binary 0/1.<br>
+                Configuration management changes required.
+            </span>
+        </label>
+        <input name="CM_impact"
+               value="{{ data['CM_impact '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>FM_impact <span class="info">i</span>
+            <span class="tooltip">
+                Binary 0/1.<br>
+                Fault/alarm management changes required.
+            </span>
+        </label>
+        <input name="FM_impact"
+               value="{{ data['FM_impact '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Tech_Lead_Support <span class="info">i</span>
+            <span class="tooltip">
+                Binary 0/1.<br>
+                Tech-lead involvement during implementation/testing.
+            </span>
+        </label>
+        <input name="Tech_Lead_Support"
+               value="{{ data['Tech_Lead_Support '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Final_Effort_Hours <span class="info">i</span>
+            <span class="tooltip">
+                Numeric (hours).<br>
+                Total recorded effort for the feature (ML label).
+            </span>
+        </label>
+        <input name="Final_Effort_Hours"
+               value="{{ data['Final_Effort_Hours'] if data else '' }}">
+    </div>
+
+    <button name="update">Update Final Effort</button>
+    <button type="submit" name="estimate" class="btn">
+        Estimate Implementation Effort
+    </button>
+
+</form>
+</div>
+
+{% if prediction %}
+<div class="result">
+    ✓ Estimated Implementation Hours: <strong>{{ prediction }}</strong>
+</div>
+{% endif %}
+
+{% if error %}
+<div class="error-box">{{ error }}</div>
+{% endif %}
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Effort Estimation Platform</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="section">
+    <h1>Effort Estimation Platform</h1>
+    <p class="subtitle">Select the type of estimation you want to perform:</p>
+
+    <div class="card-container">
+        <a href="/grooming" class="card">
+            <h3>📊 Grooming Effort</h3>
+            <p>Estimate the effort required for grooming tasks including story analysis, design complexity, and resource planning.</p>
+        </a>
+        <a href="/implementation" class="card">
+            <h3>⚙️ Implementation Effort</h3>
+            <p>Estimate the effort required for implementation including coding, testing, and integration complexity.</p>
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

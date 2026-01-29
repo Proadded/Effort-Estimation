@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Grooming Estimation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="section">
+
+<h3>Search Feature</h3>
+<form method="post">
+    <input name="Feature_ID" placeholder="Feature ID" required>
+    <button name="search">Search</button>
+</form>
+
+<hr>
+
+<h2>Grooming Effort Estimation</h2>
+
+<form method="post">
+
+    <!-- Feature ID -->
+    <div class="field">
+        <label>Feature_ID <span class="info">i</span>
+            <span class="tooltip">
+                Unique feature identifier used to track estimation and actual effort.
+            </span>
+        </label>
+        <input name="Feature_ID"
+               value="{{ data['Feature_ID'] if data else '' }}"
+               {% if data %}readonly{% endif %}>
+    </div>
+
+    <div class="field">
+        <label>No_of_UserStories <span class="info">i</span>
+            <span class="tooltip">
+                Numeric. Final count of user stories implemented.
+            </span>
+        </label>
+        <input name="No_of_UserStories"
+               value="{{ data['No_of_UserStories'] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Story_Complexity <span class="info">i</span>
+            <span class="tooltip">
+                Scale 1–3. Initial perceived complexity of stories.
+            </span>
+        </label>
+        <input name="Story_Complexity"
+               value="{{ data['Story_Complexity '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Design_Complexity <span class="info">i</span>
+            <span class="tooltip">
+                Scale 1–3. Expected difficulty of design work.
+            </span>
+        </label>
+        <input name="Design_Complexity"
+               value="{{ data['Design_Complexity '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Meta_Complexity <span class="info">i</span>
+            <span class="tooltip">
+                Scale 1–3. META/config complexity anticipated.
+            </span>
+        </label>
+        <input name="Meta_Complexity"
+               value="{{ data['Meta_Complexity '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Assumptions_Count <span class="info">i</span>
+            <span class="tooltip">
+                Numeric. Number of assumptions made during grooming.
+            </span>
+        </label>
+        <input name="Assumptions_Count"
+               value="{{ data['Assumptions_Count'] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Features_Impacted <span class="info">i</span>
+            <span class="tooltip">
+                Numeric. Count of other features/modules impacted.
+            </span>
+        </label>
+        <input name="Features_Impacted"
+               value="{{ data['Features_Impacted '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Codebase_Study_Required <span class="info">i</span>
+            <span class="tooltip">
+                Binary 0/1. Deep study of existing code/design required.
+            </span>
+        </label>
+        <input name="Codebase_Study_Required"
+               value="{{ data['Codebase_Study_Required '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>No_of_Interfaces_Impacted <span class="info">i</span>
+            <span class="tooltip">
+                Numeric. Total interfaces impacted.
+            </span>
+        </label>
+        <input name="No_of_Interfaces_Impacted"
+               value="{{ data['No_of_Interfaces_Impacted '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Interface_Complexity <span class="info">i</span>
+            <span class="tooltip">
+                Scale 1–3. Difficulty of interface changes.
+            </span>
+        </label>
+        <input name="Interface_Complexity"
+               value="{{ data['Interface_Complexity'] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Existing_Design_Study_Required <span class="info">i</span>
+            <span class="tooltip">
+                Binary 0/1. Existing design needs review.
+            </span>
+        </label>
+        <input name="Existing_Design_Study_Required"
+               value="{{ data['Existing_Design_Study_Required '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>CrossComponent_Dependencies <span class="info">i</span>
+            <span class="tooltip">
+                Numeric. Dependent components owned by other teams.
+            </span>
+        </label>
+        <input name="CrossComponent_Dependencies"
+               value="{{ data['CrossComponent_Dependencies '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>ICFS_Design_Complexity <span class="info">i</span>
+            <span class="tooltip">
+                Scale 1–3. ICFS/UML design complexity.
+            </span>
+        </label>
+        <input name="ICFS_Design_Complexity"
+               value="{{ data['ICFS_Design_Complexity '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>META_Impact_Level <span class="info">i</span>
+            <span class="tooltip">
+                Scale 1–3. Combined META impact level.
+            </span>
+        </label>
+        <input name="META_Impact_Level"
+               value="{{ data['META_Impact_Level '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Cloud_Deployment <span class="info">i</span>
+            <span class="tooltip">
+                Binary 0/1. Cloud deployment considerations.
+            </span>
+        </label>
+        <input name="Cloud_Deployment"
+               value="{{ data['Cloud_Deployment '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Classical_Deployment <span class="info">i</span>
+            <span class="tooltip">
+                Binary 0/1. Classical (non-cloud) deployment impact.
+            </span>
+        </label>
+        <input name="Classical_Deployment"
+               value="{{ data['Classical_Deployment '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>PM_impact <span class="info">i</span>
+            <span class="tooltip">
+                Binary 0/1. Performance management impact.
+            </span>
+        </label>
+        <input name="PM_impact"
+               value="{{ data['PM_impact'] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>CM_impact <span class="info">i</span>
+            <span class="tooltip">
+                Binary 0/1. Configuration management impact.
+            </span>
+        </label>
+        <input name="CM_impact"
+               value="{{ data['CM_impact'] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>FM_impact <span class="info">i</span>
+            <span class="tooltip">
+                Binary 0/1. Fault/alarm management impact.
+            </span>
+        </label>
+        <input name="FM_impact"
+               value="{{ data['FM_impact'] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Fronthaul_impact <span class="info">i</span>
+            <span class="tooltip">
+                Scale 1–3. Impact on fronthaul components.
+            </span>
+        </label>
+        <input name="Fronthaul_impact"
+               value="{{ data['Fronthaul_impact '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Backhaul_impact <span class="info">i</span>
+            <span class="tooltip">
+                Scale 1–3. Impact on backhaul components.
+            </span>
+        </label>
+        <input name="Backhaul_impact"
+               value="{{ data['Backhaul_impact'] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Tech_Lead_Support <span class="info">i</span>
+            <span class="tooltip">
+                Binary 0/1. Tech-lead involvement required.
+            </span>
+        </label>
+        <input name="Tech_Lead_Support"
+               value="{{ data['Tech_Lead_Support '] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Open_Points_Percentage <span class="info">i</span>
+            <span class="tooltip">
+                Percentage of unclear or grey areas in requirements.
+            </span>
+        </label>
+        <input name="Open_Points_Percentage"
+               value="{{ data['Open_Points_Percentage'] if data else '' }}">
+    </div>
+
+    <div class="field">
+        <label>Final_Effort_Hours <span class="info">i</span>
+            <span class="tooltip">
+                Actual recorded effort in hours (ground truth label).
+            </span>
+        </label>
+        <input name="Final_Effort_Hours"
+               value="{{ data['Final_Effort_Hours'] if data else '' }}">
+    </div>
+
+    <button name="update">Update Final Effort</button>
+    <button type="submit" name="estimate" class="btn">
+        Estimate Grooming Effort
+    </button>
+
+</form>
+</div>
+
+{% if prediction %}
+<div class="result">
+    ✓ Estimated Grooming Hours: <strong>{{ prediction }}</strong>
+</div>
+{% endif %}
+
+{% if error %}
+<div class="error-box">{{ error }}</div>
+{% endif %}
+
+</body>
+</html>
