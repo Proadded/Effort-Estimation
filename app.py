@@ -113,6 +113,14 @@ def implementation():
         data=data
     )
 
+@app.route("/debug/csv/<name>")
+def debug_csv(name):
+    if name not in ["Grooming", "Implementation"]:
+        return "Invalid file", 400
+
+    with open(f"data/{name}.csv", "r") as f:
+        return "<pre>" + f.read() + "</pre>"
+
 
 
 if __name__ == "__main__":
