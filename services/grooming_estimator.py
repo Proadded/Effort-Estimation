@@ -5,15 +5,11 @@ model = joblib.load("model/grooming_effort_model.pkl")
 
 
 def predict_grooming(form_data: dict):
-    """
-    CSV-driven schema adapter (Option 2).
-    Model is treated as immutable.
-    """
+    import pandas as pd
 
-    # 1. Read grooming CSV header as schema
+    # 1. Read CSV header as schema
     schema = pd.read_csv("data/Grooming_testing.csv", nrows=0).columns.tolist()
 
-    # 2. Exclude non-model columns
     excluded_cols = {
         "Feature_ID",
         "Final_Effort_Hours",
@@ -22,24 +18,28 @@ def predict_grooming(form_data: dict):
 
     model_columns = [c for c in schema if c.strip() not in excluded_cols]
 
-    # 3. Build model-aligned row
+    # 2. Build row using CSV column names
     row = {}
-
     for col in model_columns:
         clean_col = col.strip()
-
         if clean_col not in form_data:
             raise ValueError(f"Missing feature: {clean_col}")
+        raw_value = form_data.get(clean_col, "").strip()
 
-        value = form_data[clean_col]
+        if raw_value == "":
+            row[col] = 0.0
+        else:
+            try:
+                row[col] = float(raw_value)
+            except ValueError:
+                raise ValueError(f"Invalid numeric value for {clean_col}: {raw_value}")
 
-        try:
-            row[col] = float(value)
-        except ValueError:
-            raise ValueError(f"Invalid numeric value for {clean_col}: {value}")
-
-    # 4. Ordered DataFrame (matches training)
+    # 3. Create DataFrame
     input_df = pd.DataFrame([row], columns=model_columns)
+
+    # 🔑 4. FORCE column names to match model training schema
+    input_df.columns = model.feature_names_in_
 
     # 5. Predict
     return model.predict(input_df)[0]
+

@@ -5,45 +5,38 @@ model = joblib.load("model/implementation_effort_model.pkl")
 
 
 def predict_implementation(form_data: dict):
-    """
-    Option-2 (CSV-driven) with normalization adapter.
-    Model is immutable. CSV stays unchanged.
-    """
+    # 1. Read CSV header as schema
+    schema = pd.read_csv("data/Implementation_testing.csv", nrows=0).columns.tolist()
 
-    # 1. Read CSV schema
-    raw_schema = pd.read_csv("data/Implementation_testing.csv", nrows=0).columns.tolist()
-
-    # 2. Columns not used by model
-    excluded = {
+    excluded_cols = {
         "Feature_ID",
         "Final_Effort_Hours",
         "Estimated_Implementation_Effort"
     }
 
-    # 3. Build normalized schema (strip spaces)
-    model_columns = []
-    column_map = {}  # clean_name -> original_csv_name
+    model_columns = [c for c in schema if c.strip() not in excluded_cols]
 
-    for col in raw_schema:
-        clean = col.strip()
-        if clean not in excluded:
-            model_columns.append(clean)
-            column_map[clean] = col  # map clean → dirty
-
-    # 4. Build row using CLEAN names (model expects these)
+    # 2. Build row using CSV column names
     row = {}
+    for col in model_columns:
+        clean_col = col.strip()
+        if clean_col not in form_data:
+            raise ValueError(f"Missing feature: {clean_col}")
+        raw_value = form_data.get(clean_col, "").strip()
 
-    for feature in model_columns:
-        if feature not in form_data:
-            raise ValueError(f"Missing feature: {feature}")
+        if raw_value == "":
+            row[col] = 0.0
+        else:
+            try:
+                row[col] = float(raw_value)
+            except ValueError:
+                raise ValueError(f"Invalid numeric value for {clean_col}: {raw_value}")
 
-        try:
-            row[feature] = float(form_data[feature])
-        except ValueError:
-            raise ValueError(f"Invalid numeric value for {feature}: {form_data[feature]}")
-
-    # 5. Create DataFrame with CLEAN column names
+    # 3. Create DataFrame
     input_df = pd.DataFrame([row], columns=model_columns)
 
-    # 6. Predict
+    # 🔑 4. FORCE column names to match model training schema
+    input_df.columns = model.feature_names_in_
+
+    # 5. Predict
     return model.predict(input_df)[0]
