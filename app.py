@@ -115,7 +115,7 @@ def implementation():
 
 @app.route("/debug/csv/<name>")
 def debug_csv(name):
-    if name not in ["Grooming", "Implementation"]:
+    if name not in ["Grooming_testing", "Implementation_testing"]:
         return "Invalid file", 400
 
     with open(f"data/{name}.csv", "r") as f:
